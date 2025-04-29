@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Movie Review</title>
+  </head>
+  <body>
+    <div>
+      <a href="{% url 'register' %}">Register</a>
+      <a href="{% url 'login' %}">Login</a>
+    </div>
+    <div>{% block content %}{% endblock %}</div>
+  </body>
+</html>
