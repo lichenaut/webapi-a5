@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ('review',)
+        fields = ('review', 'rating')
 
 class RegisterForm(UserCreationForm):
     class Meta:

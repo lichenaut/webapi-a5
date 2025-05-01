@@ -6,6 +6,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from django.contrib.auth import authenticate, login
+from django.db.models import Avg
 
 def movie_list(request):
     movies = Movie.objects.all()
@@ -14,7 +15,10 @@ def movie_list(request):
 def movie_detail(request, pk):
     movie = Movie.objects.get(pk=pk)
     reviews = Review.objects.filter(movie=movie)
-    return render(request,'movie_detail.html', {'movie': movie,'reviews': reviews})
+    average_rating = reviews.aggregate(Avg('rating'))['rating__avg']
+    if average_rating is None:
+        average_rating = 0
+    return render(request,'movie_detail.html', {'movie': movie,'reviews': reviews, 'average_rating': average_rating})
 
 @login_required
 def add_review(request, pk):
@@ -29,7 +33,7 @@ def add_review(request, pk):
             return redirect('movie_detail', pk=pk)
     else:
         form = ReviewForm()
-    return render(request,'add_review.html', {'form': form,'movie': movie})
+    return render(request, 'add_review.html', {'form': form})
 
 def register(request):
     if request.method == 'POST':

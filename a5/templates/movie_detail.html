@@ -3,11 +3,14 @@
 <p>Release Date: {{ movie.release_date }}</p>
 <p>Genre: {{ movie.genre }}</p>
 <p>Actors: {{ movie.actors }}</p>
+<p>Average rating: {{ average_rating }}</p>
 <p><img src="{{ movie.image_url }}" alt="Movie Image" /></p>
 <h2>Reviews</h2>
 <ul>
   {% for review in reviews %}
-  <li>{{ review.user.username }}: {{ review.review }}</li>
+  <li>
+    {{ review.user.username }}: {{ review.review }} ({{ review.rating }} stars)
+  </li>
   {% endfor %}
 </ul>
 {% if user.is_authenticated %}
